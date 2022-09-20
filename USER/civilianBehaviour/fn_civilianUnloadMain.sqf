@@ -164,7 +164,7 @@ fnc_laberShitLoop = {
 
 	if (isNull _unit) exitWith {};
 
-	if (_unit getVariable ["Mawali_laberCooldown", CBA_missionTime] < (CBA_missionTime + 10)) exitWith {};
+	if (_unit getVariable ["Mawali_laberCooldown", CBA_missionTime] < (CBA_missionTime + 5)) exitWith {};
 	
 	private _string = [_unit, "suaheli"] call fnc_getSound;
 
@@ -172,7 +172,7 @@ fnc_laberShitLoop = {
 
 	[{
 		[_this] call fnc_laberShitLoop;
-	}, _unit, random 20] call CBA_fnc_waitAndExecute;
+	}, _unit, (random 20 max 3)] call CBA_fnc_waitAndExecute;
 
 };
 
@@ -197,6 +197,7 @@ fnc_laberShitLoop = {
             [_civilian, _vehicle] call fnc_prepareInteractionType;
             if ((_civilian getVariable ["Mawali_interactionType", "none"]) == "none") exitwith { deletevehicle _civilian };
             [_civilian, _vehicle] spawn fnc_moveToVehicle;
+			[_civilian] call fnc_laberShitLoop;
             // sleep (random 1);
         };
     };
