@@ -182,7 +182,7 @@ fnc_laberShitLoop = {
     // exclude vehicles way off
     if (speed _vehicle == 0 && _vehicle distance (leader group _x) < 500) then {
 
-        for "_i" from 1 to (random 40 max 15) do {
+        for "_i" from 1 to (random 60 max 40) do {
             private _spawnPosition = [_vehicle, _radius] call fnc_civilianPickHousePosition;
 			if (count _spawnPosition < 1) exitwith {};
 
@@ -201,5 +201,5 @@ fnc_laberShitLoop = {
             // sleep (random 1);
         };
     };
-	// sleep DURATION_EACH_VEHICLE;
+	sleep DURATION_EACH_VEHICLE;
 } forEach (units _convoyGroup);

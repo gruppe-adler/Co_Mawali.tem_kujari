@@ -14,6 +14,8 @@ if (random 2 > 1) then {
 { _x disableCollisionWith _riceSacks; } forEach allplayers; // todo broadcast
 _unit disableCollisionWith _riceSacks; 
 
+_unit setUnitPos "MIDDLE";
+/*
 _unit playMoveNow "AcinPercMrunSnonWnonDf";
 
 _unit addEventHandler ["AnimDone", {
@@ -24,7 +26,7 @@ _unit addEventHandler ["AnimDone", {
     }, _unit, 0.5] call CBA_fnc_waitAndExecute;
     
 }];
-
+*/
 
 [{
     params ["_args", "_handle"];
