@@ -10,13 +10,22 @@ if (_pushThrough) then {
     {(vehicle _x) setUnloadInCombat [false, false];} forEach (units _convoyGroup);
 };
 _convoyGroup setFormation "COLUMN";
+_convoyGroup setCombatBehaviour "CARELESS";
+_convoyGroup disableI
 {
     (vehicle _x) limitSpeed _convoySpeed*1.15;
     (vehicle _x) setConvoySeparation _convoySeparation;
+    _x disableAI "FSM";
+    _x disableAI "AUTOCOMBAT";
 } forEach (units _convoyGroup);
 (vehicle leader _convoyGroup) limitSpeed _convoySpeed;
 
-while {sleep 5; !isNull _convoyGroup} do {
+
+[{
+    params ["_args", "_handle"];
+    _args params ["_convoyGroup"];
+
+    if (isNull _convoyGroup) exitWith { [_handle] call CBA_fnc_removePerFrameHandler; };
 
     // enable speed adjustments on the fly
     private _convoySpeed = missionNamespace getVariable ["GRAD_convoySpeed", 0];
@@ -53,4 +62,5 @@ while {sleep 5; !isNull _convoyGroup} do {
         private _vehicle = vehicle _x;
         (_vehicle) setConvoySeparation _convoySeparation;
     } forEach (units _convoyGroup);
-};
+
+} 1, [_convoyGroup]] call CBA_fnc_addPerFrameHandler;
