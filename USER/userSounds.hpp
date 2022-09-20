@@ -1186,3 +1186,73 @@ class akin2_welcome_13
     // subtitle delay in seconds, subtitle text
     titles[] = {};
 };
+
+
+
+
+class convoy_stopping1
+{
+    name = "convoy_stopping1";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\convoy_stopping1.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class convoy_stopping2
+{
+    name = "convoy_stopping2";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\convoy_stopping2.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class convoy_stopping3
+{
+    name = "convoy_stopping3";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\convoy_stopping3.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class convoy_stopping4
+{
+    name = "convoy_stopping4";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\convoy_stopping4.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+
+
+class convoy_moving1
+{
+    name = "convoy_moving1";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\convoy_moving1.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class convoy_moving2
+{
+    name = "convoy_moving2";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\convoy_moving2.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class convoy_moving3
+{
+    name = "convoy_moving3";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\convoy_moving3.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class convoy_moving4
+{
+    name = "convoy_moving4";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\convoy_moving4.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};

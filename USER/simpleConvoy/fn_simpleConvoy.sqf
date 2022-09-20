@@ -63,4 +63,4 @@ _convoyGroup setCombatBehaviour "CARELESS";
         (_vehicle) setConvoySeparation _convoySeparation;
     } forEach (units _convoyGroup);
 
-} 1, [_convoyGroup]] call CBA_fnc_addPerFrameHandler;
+}, 1, [_convoyGroup]] call CBA_fnc_addPerFrameHandler;

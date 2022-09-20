@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=298;
+		nextID=306;
 	};
 	class Camera
 	{
-		pos[]={12087.517,32.352623,14980.835};
-		dir[]={0.78816563,-0.48573586,0.37812057};
-		up[]={0.43799406,0.87406725,0.21012659};
-		aside[]={0.43257093,4.9173832e-007,-0.90166408};
+		pos[]={12173.383,39.31839,15009.27};
+		dir[]={-0.82046586,-0.54579461,0.17013016};
+		up[]={-0.53442615,0.83791894,0.11081754};
+		aside[]={0.2030389,0,0.9791708};
 	};
 };
 binarizationWanted=0;
@@ -254,7 +254,7 @@ class ScenarioData
 };
 class CustomAttributes
 {
-	class Category1
+	class Category0
 	{
 		name="Scenario";
 		class Attribute0
@@ -4414,7 +4414,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=218;
+		items=212;
 		class Item0
 		{
 			dataType="Layer";
@@ -12913,6 +12913,7 @@ class Mission
 			};
 			id=1863;
 			type="Land_Cargo20_IDAP_F";
+			atlOffset=-2.6702881e-005;
 		};
 		class Item211
 		{
@@ -12930,66 +12931,6 @@ class Mission
 			id=1864;
 			type="Land_Cargo40_IDAP_F";
 			atlOffset=-1.335144e-005;
-		};
-		class Item212
-		{
-			dataType="Group";
-			side="East";
-			class Attributes
-			{
-			};
-			id=1871;
-			atlOffset=-17.424999;
-		};
-		class Item213
-		{
-			dataType="Group";
-			side="East";
-			class Attributes
-			{
-			};
-			id=1882;
-			atlOffset=-17.424999;
-		};
-		class Item214
-		{
-			dataType="Group";
-			side="East";
-			class Attributes
-			{
-			};
-			id=1959;
-			atlOffset=-17.424999;
-		};
-		class Item215
-		{
-			dataType="Group";
-			side="East";
-			class Attributes
-			{
-			};
-			id=1964;
-			atlOffset=-17.424999;
-		};
-		class Item216
-		{
-			dataType="Group";
-			side="East";
-			class Attributes
-			{
-			};
-			id=1969;
-			atlOffset=-17.424999;
-		};
-		class Item217
-		{
-			dataType="Group";
-			side="East";
-			class Attributes
-			{
-			};
-			id=1978;
-			atlOffset=-17.424999;
 		};
 	};
 	class Connections
