@@ -11,7 +11,7 @@ if (_pushThrough) then {
 };
 _convoyGroup setFormation "COLUMN";
 _convoyGroup setCombatBehaviour "CARELESS";
-_convoyGroup disableI
+
 {
     (vehicle _x) limitSpeed _convoySpeed*1.15;
     (vehicle _x) setConvoySeparation _convoySeparation;

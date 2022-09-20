@@ -20,7 +20,9 @@
               _x setSkill ["commanding", 1];
               _x setSkill ["general", 1];
 
-              _x addGoggles "CUP_Beard_Black";
+              private _face = selectRandom ["AfricanHead_01", "AfricanHead_02", "AfricanHead_03", "AfricanHead_01_sick", "AfricanHead_02_sick", "AfricanHead_03_sick"];
+              [_x, _face] remoteExec ["setFace", 0, _x];
+              
           } forEach units _group;
 
           ["GRAD_missionControl_setServerAsOwner", [_group]] call CBA_fnc_serverEvent;
