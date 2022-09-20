@@ -1,5 +1,6 @@
 params ["_convoyGroup", "_radius"];
 
+#define DURATION_EACH_VEHICLE 30
 
 fnc_civilianPickHousePosition = {
     params ["_vehicle", "_radius"];
@@ -8,14 +9,15 @@ fnc_civilianPickHousePosition = {
     private _positionInBuildings = ([_randomBuilding] call BIS_fnc_buildingPositions);
 
     private _positionInBuilding = if (count _positionInBuildings > 0) then { selectRandom _positionInBuildings } else { [] };
+	if (count _positionInBuilding < 1) exitWith { [] };
 
 	private _isInside = lineIntersectsSurfaces [							
-		_spawnPosition, 
-		_spawnPosition vectorAdd [0, 0, 50], 
-		_x, objNull, true, 1, "GEOM", "NONE"
-	] select 0 params ["","","","_house"];
+		AGLtoASL _positionInBuilding, 
+		(AGLtoASL _positionInBuilding) vectorAdd [0, 0, 50], 
+		objNull, objNull, true, 1, "GEOM", "NONE"
+	];
 
-	if (!_isInside) then { _positionInBuilding = [] };
+	if (count _isInside < 1) then { _positionInBuilding = [] };
 
     _positionInBuilding
 };
@@ -24,9 +26,9 @@ fnc_getSuffix = {
     params ["_number"];
 
     private _zero = if (_number < 10) then { "0" } else { "" };
-    _suffix = _zero + str _number;  
+    private _return = _zero + str _number;  
 
-    _suffix
+    _return
 };
 
 
@@ -39,24 +41,24 @@ fnc_getSound = {
 
     switch (_type) do { 
         case "rice" : {
-            _return = (ceil (random 14)) call fnc_getSuffix;
+            _suffix = [(ceil (random 14))] call fnc_getSuffix;
         }; 
         case "adieu" : {
-            _return = (ceil (random 15)) call fnc_getSuffix;
+            _suffix = [(ceil (random 15))] call fnc_getSuffix;
         }; 
         case "water" : {
-            _return = (ceil (random 15)) call fnc_getSuffix;
+            _suffix = [(ceil (random 15))] call fnc_getSuffix;
         }; 
         case "suaheli" : {
-            _return = (ceil (random 15)) call fnc_getSuffix;
+            _suffix = [(ceil (random 15))] call fnc_getSuffix;
         }; 
         case "welcome" : {
-            _return = (ceil (random 15)) call fnc_getSuffix;
+            _suffix = [(ceil (random 15))] call fnc_getSuffix;
         }; 
         default {  /*...code...*/ }; 
     };
 
-	_return = _prefix + _return + _suffix;
+	_return = _prefix + "_" + _type + "_" + _suffix;
 
 	_return
 };
@@ -67,6 +69,7 @@ fnc_saySound = {
 
     [_unit, _sound] remoteExec ["say3d"];
     [_unit, true] remoteExec ["setRandomLip"];
+	_unit setVariable ["Mawali_laberCooldown", CBA_missionTime];
 
     [{ 
         [_this, false] remoteExec ["setRandomLip"]; 
@@ -96,7 +99,7 @@ fnc_moveToVehicle = {
             private _canisters = attachedObjects _unit;
             {detach _x} forEach _canisters;
 
-            private _sound = ["water"] call fnc_getSound;
+            private _sound = [_unit, "water"] call fnc_getSound;
             [_unit, _sound] call fnc_saySound;
             [_unit, "ace_field_rations_drinkFromSourceSquatLow", 1] call ace_common_fnc_doAnimation;
             sleep 8;
@@ -104,7 +107,7 @@ fnc_moveToVehicle = {
                 _x attachTo [_unit, [0,0,-.3], (["lefthand", "righthand"] select _forEachIndex), true];
             } forEach _canisters;
 
-            private _sound = ["water"] call fnc_getSound;
+            private _sound = [_unit, "water"] call fnc_getSound;
             [_unit, _sound] call fnc_saySound;
             _unit doMove (_unit getVariable ["Mawali_homePos", [0,0,0]]);
             waitUntil {sleep 1; moveToCompleted _unit};
@@ -112,9 +115,9 @@ fnc_moveToVehicle = {
             deletevehicle _unit;
         }; 
         case "rice" : {
-            [_unit] execvm "user\scripts\civilianUnload\carryAnimation.sqf";
+            [_unit] call grad_civilianBehaviour_fnc_carryAnimation;
             _unit doMove (_unit getVariable ["Mawali_homePos", [0,0,0]]);
-            private _sound = ["rice"] call fnc_getSound;
+            private _sound = [_unit, "rice"] call fnc_getSound;
             [_unit, _sound] call fnc_saySound;
             waitUntil {sleep 1; moveToCompleted _unit};
             deletevehicle _unit;
@@ -156,12 +159,30 @@ fnc_civilianUnloadRice = {
 };
 
 
+fnc_laberShitLoop = {
+    params ["_unit"];
+
+	if (isNull _unit) exitWith {};
+
+	if (_unit getVariable ["Mawali_laberCooldown", CBA_missionTime] < (CBA_missionTime + 10)) exitWith {};
+	
+	private _string = [_unit, "suaheli"] call fnc_getSound;
+
+	[_unit, _string] call fnc_saySound;
+
+	[{
+		[_this] call fnc_laberShitLoop;
+	}, _unit, random 20] call CBA_fnc_waitAndExecute;
+
+};
+
+
 {
     private _vehicle = vehicle _x;
     // exclude vehicles way off
     if (speed _vehicle == 0 && _vehicle distance (leader group _x) < 500) then {
 
-        for "_i" from 1 to (random 20 max 5) do {
+        for "_i" from 1 to (random 40 max 5) do {
             private _spawnPosition = [_vehicle, _radius] call fnc_civilianPickHousePosition;
 			if (count _spawnPosition < 1) exitwith {};
 
@@ -176,7 +197,8 @@ fnc_civilianUnloadRice = {
             [_civilian, _vehicle] call fnc_prepareInteractionType;
             if ((_civilian getVariable ["Mawali_interactionType", "none"]) == "none") exitwith { deletevehicle _civilian };
             [_civilian, _vehicle] spawn fnc_moveToVehicle;
-            sleep (random 1);
+            // sleep (random 1);
         };
     };
+	// sleep DURATION_EACH_VEHICLE;
 } forEach (units _convoyGroup);
