@@ -8,7 +8,7 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=2092;
+		nextID=2095;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=306;
+		nextID=314;
 	};
 	class Camera
 	{
-		pos[]={12173.383,39.31839,15009.27};
-		dir[]={-0.82046586,-0.54579461,0.17013016};
-		up[]={-0.53442615,0.83791894,0.11081754};
-		aside[]={0.2030389,0,0.9791708};
+		pos[]={12001.284,52.562599,15153.307};
+		dir[]={0.3769969,-0.64844036,-0.66136199};
+		up[]={0.32112285,0.7612657,-0.56334311};
+		aside[]={-0.86876595,2.1944288e-008,-0.49522361};
 	};
 };
 binarizationWanted=0;
@@ -4489,7 +4489,7 @@ class Mission
 			name="Template: Spielereinheiten";
 			class Entities
 			{
-				items=18;
+				items=19;
 				class Item0
 				{
 					dataType="Logic";
@@ -5409,6 +5409,8 @@ class Mission
 							flags=7;
 							class Attributes
 							{
+								rank="MAJOR";
+								name="boss";
 								description="Zugführer@Cmd";
 								isPlayable=1;
 								aiRadarUsage=544042752;
@@ -6901,9 +6903,103 @@ class Mission
 						nAttributes=1;
 					};
 				};
+				class Item18
+				{
+					dataType="Group";
+					side="West";
+					class Entities
+					{
+						items=1;
+						class Item0
+						{
+							dataType="Object";
+							class PositionInfo
+							{
+								position[]={12017.361,20.761438,15130.528};
+								angles[]={0,4.7585006,0};
+							};
+							side="West";
+							flags=6;
+							class Attributes
+							{
+								rank="MAJOR";
+								description="Zeus";
+								isPlayer=1;
+								isPlayable=1;
+								aiRadarUsage=544042752;
+							};
+							id=2094;
+							type="B_RangeMaster_F";
+							class CustomAttributes
+							{
+								class Attribute0
+								{
+									property="acex_headless_blacklist";
+									expression="_this setVariable [""acex_headless_blacklist"", _value, true]";
+									class Value
+									{
+										class data
+										{
+											singleType="BOOL";
+											value=0;
+										};
+									};
+								};
+								class Attribute1
+								{
+									property="speaker";
+									expression="_this setspeaker _value;";
+									class Value
+									{
+										class data
+										{
+											singleType="STRING";
+											value="Male01ENG";
+										};
+									};
+								};
+								class Attribute2
+								{
+									property="pitch";
+									expression="_this setpitch _value;";
+									class Value
+									{
+										class data
+										{
+											singleType="SCALAR";
+											value=1;
+										};
+									};
+								};
+								nAttributes=3;
+							};
+						};
+					};
+					class Attributes
+					{
+					};
+					id=2092;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="acex_headless_blacklist";
+							expression="_this setVariable [""acex_headless_blacklist"", _value, true]";
+							class Value
+							{
+								class data
+								{
+									singleType="BOOL";
+									value=0;
+								};
+							};
+						};
+						nAttributes=1;
+					};
+				};
 			};
 			id=729;
-			atlOffset=13.939583;
+			atlOffset=10.654728;
 		};
 		class Item2
 		{

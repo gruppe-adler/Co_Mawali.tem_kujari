@@ -11,7 +11,7 @@ if (!isServer) exitWith {};
 missionNamespace setVariable ["Mawali_convoyState", 0];
 
 ["Mawali_convoyState", {
-		params ["_convoyGoBool", "_zeus"]
+		params ["_convoyGoBool", "_zeus"];
 
 		if (_zeus) then {
 			missionNamespace setVariable ["Mawali_convoyStateZeus", _convoyGoBool];
@@ -19,8 +19,8 @@ missionNamespace setVariable ["Mawali_convoyState", 0];
 			missionNamespace setVariable ["Mawali_convoyStateEscort", _convoyGoBool];
 		};
 
-		private _convoyStateZeus = missionNamespace getVariable ["Mawali_convoyStateZeus", false];
-		private _convoyStateEscort = missionNamespace getVariable ["Mawali_convoyStateEscort", false];
+		private _convoyStateZeus = missionNamespace getVariable ["Mawali_convoyStateZeus", true];
+		private _convoyStateEscort = missionNamespace getVariable ["Mawali_convoyStateEscort", true];
 
 		if (_convoyStateZeus && _convoyStateEscort) then {
 				private _speed = missionNamespace getVariable ["Mawali_convoySpeedCache", 0.01];
@@ -34,18 +34,20 @@ missionNamespace setVariable ["Mawali_convoyState", 0];
 }] call CBA_fnc_addEventhandler;
 
 ["Mawali_convoySpeed", {
-		params ["_speed"]
+		params ["_speed"];
 
 		if (_speed < 0.5) exitWith {
 				// convoy says "stopping now"
-					private _previousSpeed = missionNamespace getVariable ["Mawali_convoySpeed", 0.01];
-					missionNamespace setVariable ["Mawali_convoySpeedCache", _previousSpeed];
-					missionNamespace setVariable ["Mawali_convoySpeed", 0.01];
+				[boss, false] call grad_simpleConvoy_fnc_tfarResponse;
+				private _previousSpeed = missionNamespace getVariable ["Mawali_convoySpeed", 0.01];
+				missionNamespace setVariable ["Mawali_convoySpeedCache", _previousSpeed];
+				missionNamespace setVariable ["Mawali_convoySpeed", 0.01];
 		};
 
 		private _state = missionNamespace getVariable ["Mawali_convoyState", 0];
 		if (_state == 2) then {
 				// convoy says "running now"
+				[boss, true] call grad_simpleConvoy_fnc_tfarResponse;
 				missionNamespace setVariable ["Mawali_convoySpeedCache", _speed];
 				missionNamespace setVariable ["Mawali_convoySpeed", _speed];
 		};

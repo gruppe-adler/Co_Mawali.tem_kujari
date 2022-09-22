@@ -8,16 +8,8 @@ fnc_civilianPickHousePosition = {
     private _randomBuilding = selectRandom (nearestObjects [_vehicle, ["House", "Building"], _radius]);
     private _positionInBuildings = ([_randomBuilding] call BIS_fnc_buildingPositions);
 
-    private _positionInBuilding = if (count _positionInBuildings > 0) then { selectRandom _positionInBuildings } else { [] };
+    private _positionInBuilding = if (count _positionInBuildings > 0) then { _positionInBuildings#0 } else { [] };
 	if (count _positionInBuilding < 1) exitWith { [] };
-
-	private _isInside = lineIntersectsSurfaces [							
-		AGLtoASL _positionInBuilding, 
-		(AGLtoASL _positionInBuilding) vectorAdd [0, 0, 50], 
-		objNull, objNull, true, 1, "GEOM", "NONE"
-	];
-
-	if (count _isInside < 1) then { _positionInBuilding = [] };
 
     _positionInBuilding
 };
@@ -183,6 +175,8 @@ fnc_laberShitLoop = {
     if (speed _vehicle == 0 && _vehicle distance (leader group _x) < 500) then {
 
         for "_i" from 1 to (random 60 max 40) do {
+
+            systemChat str _i;
             private _spawnPosition = [_vehicle, _radius] call fnc_civilianPickHousePosition;
 			if (count _spawnPosition < 1) exitwith {};
 
