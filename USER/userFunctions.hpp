@@ -5,3 +5,5 @@
 
 #include "civilianBehaviour\cfgFunctions.hpp"
 #include "simpleConvoy\cfgFunctions.hpp"
+#include "zeusmodules\cfgFunctions.hpp"
+#include "ambient\cfgFunctions.hpp"

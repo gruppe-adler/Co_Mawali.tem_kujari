@@ -121,6 +121,54 @@
 
 
 
+["MAWALI Convoy Control", "Start Convoy",
+    {
+      params ["_position", "_object"];
+      
+		  ["Mawali_convoyState",[true, true]] call CBA_fnc_serverEvent;
+
+}] call zen_custom_modules_fnc_register;
+
+["MAWALI Convoy Control", "Stop Convoy",
+    {
+      params ["_position", "_object"];
+      
+		  ["Mawali_convoyState",[false, true]] call CBA_fnc_serverEvent;
+
+}] call zen_custom_modules_fnc_register;
+
+
+["MAWALI Convoy Control", "Convoy 40 kmh",
+    {
+      params ["_position", "_object"];
+      
+		  ["Mawali_convoySpeed",[40]] call CBA_fnc_serverEvent;
+
+}] call zen_custom_modules_fnc_register;
+
+["MAWALI Convoy Control", "Convoy 50 kmh",
+    {
+      params ["_position", "_object"];
+      
+		  ["Mawali_convoySpeed",[50]] call CBA_fnc_serverEvent;
+
+}] call zen_custom_modules_fnc_register;
+
+["MAWALI Convoy Control", "Convoy 65 kmh",
+    {
+      params ["_position", "_object"];
+      
+		  ["Mawali_convoySpeed",[65]] call CBA_fnc_serverEvent;
+
+}] call zen_custom_modules_fnc_register;
+
+["MAWALI Convoy Control", "Convoy 80 kmh",
+    {
+      params ["_position", "_object"];
+      
+		  ["Mawali_convoySpeed",[80]] call CBA_fnc_serverEvent;
+
+}] call zen_custom_modules_fnc_register;
 
 
 ["MAWALI Ambient", "Music Radio",

@@ -32,14 +32,7 @@ _unit addEventHandler ["AnimDone", {
     params ["_args", "_handle"];
     _args params ["_unit", "_riceSacks"];
 
-    if (!alive _unit) then {
-    
-        detach _riceSacks;
-        [_unit, "", 2] call ace_common_fnc_doAnimation;
-        [_handle] call CBA_fnc_removePerFrameHandler;
-    };
-
     if (isNull _unit) then {
         deleteVehicle _riceSacks;
     };    
-}, 0, [_unit, _riceSacks]] call CBA_fnc_addPerFramehandler;
+}, 1, [_unit, _riceSacks]] call CBA_fnc_addPerFramehandler;

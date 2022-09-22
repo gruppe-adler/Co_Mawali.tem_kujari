@@ -2,7 +2,7 @@ params ["_type", "_cloaked"];
 
 
 private _classname = switch (_type) do { 
-    case "squad" : { 
+    case "squad" : {
         if (_cloaked) then {
             selectRandom [
                    "UK3CB_ADC_C_Ikarus",
@@ -14,7 +14,7 @@ private _classname = switch (_type) do {
             selectRandom [
                     "UK3CB_ADG_O_V3S_Open_ISL",
                     "UK3CB_ADG_O_Ural_Open_ISL",
-                    "UK3CB_ADG_O_Kamaz_Open
+                    "UK3CB_ADG_O_Kamaz_Open"
             ]
         };
     }; 

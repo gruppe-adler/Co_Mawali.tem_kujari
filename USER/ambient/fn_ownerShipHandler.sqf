@@ -27,7 +27,8 @@ if (!isServer) exitWith {};
 
             // add beard for taliban
             if (side _x == east) then {
-                _x addGoggles "CUP_Beard_Black";
+                private _face = selectRandom ["AfricanHead_01", "AfricanHead_02", "AfricanHead_03", "AfricanHead_01_sick", "AfricanHead_02_sick", "AfricanHead_03_sick"];
+                [_x, _face] remoteExec ["setFace", 0, _x];
             };
         } forEach units _group;
     }, [_group], 3] call CBA_fnc_waitAndExecute;

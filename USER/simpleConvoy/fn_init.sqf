@@ -11,7 +11,7 @@ if (!isServer) exitWith {};
 missionNamespace setVariable ["Mawali_convoyState", 0];
 
 ["Mawali_convoyState", {
-		params ["_convoyGoBool", "_zeus"];
+		params [["_convoyGoBool", false], ["_zeus", false]];
 
 		if (_zeus) then {
 			missionNamespace setVariable ["Mawali_convoyStateZeus", _convoyGoBool];
@@ -24,11 +24,11 @@ missionNamespace setVariable ["Mawali_convoyState", 0];
 
 		if (_convoyStateZeus && _convoyStateEscort) then {
 				private _speed = missionNamespace getVariable ["Mawali_convoySpeedCache", 0.01];
-				[_speed] call CBA_fnc_serverEvent;
+				["Mawali_convoySpeed", [_speed]] call CBA_fnc_serverEvent;
 		};
 
 		if (!_convoyStateZeus || !_convoyStateEscort) then {
-				[0.01] call CBA_fnc_serverEvent;
+				["Mawali_convoySpeed", [0.01]] call CBA_fnc_serverEvent;
 		};
 
 }] call CBA_fnc_addEventhandler;
