@@ -49,7 +49,7 @@ fnc_getSound = {
             _suffix = [(ceil (random 14))] call fnc_getSuffix;
         }; 
         case "adieu" : {
-            _suffix = [(ceil (random 15))] call fnc_getSuffix;
+            _suffix = [(ceil (random 14))] call fnc_getSuffix;
         }; 
         case "water" : {
             _suffix = [(ceil (random 15))] call fnc_getSuffix;
@@ -95,16 +95,16 @@ fnc_moveToVehicle = {
     private _p1 = _boundingBox select 0;
     private _p2 = _boundingBox select 1;
     private _length = abs ((_p2 select 1) - (_p1 select 1));
-    private _vehicleRear = _vehicle getRelPos [_length/2, 175 + random 10];
+    private _vehicleRear = _vehicle getRelPos [_length/2 - (random 2), 170 + random 20];
 
     _unit limitSpeed 12; // dont sprint
 
     _unit doMove _vehicleRear;
-    waitUntil {moveToCompleted  _unit || moveToFailed _unit};
+    waitUntil {unitReady _unit};
 
     if (moveToFailed _unit) exitWith {
         _unit doMove (_unit getVariable ["Mawali_homePos", [0,0,0]]);
-        waitUntil {moveToCompleted _unit || moveToFailed _unit};
+        waitUntil {sleep 1; unitReady _unit};
         deletevehicle _unit;
     };
     
@@ -117,27 +117,53 @@ fnc_moveToVehicle = {
             [_unit, _sound] call fnc_saySound;
             [_unit, "ace_field_rations_drinkFromSourceSquatLow", 1] call ace_common_fnc_doAnimation;
             sleep 8;
-            /*
+            
             {
-                _x attachTo [_unit, [0,0,-.3], (["lefthand", "righthand"] select _forEachIndex), true];
+                if (typeOf _x == "Land_BarrelEmpty_F") then {
+                    private _replacement = createSimpleObject ["Land_BarrelWater_F", [0,0,0]];
+                    _replacement attachTo [_unit, [0,-.4,0.4], "pelvis", true];
+                    deleteVehicle _x;
+                };
             } forEach _canisters;
-            */
+
+            {
+                if (typeOf _x == "Land_BarrelEmpty_grey_F") then {
+                    private _replacement = createSimpleObject ["Land_BarrelWater_grey_F", [0,0,0]];
+                    _replacement attachTo [_unit, [0,-.4,0.4], "pelvis", true];
+                    deleteVehicle _x;
+                };
+            } forEach _canisters;
+
+             {
+                if (typeOf _x == "Land_Barrel_empty") then {
+                    private _replacement = createSimpleObject ["Land_Barrel_water", [0,0,0]];
+                    _replacement attachTo [_unit, [0,-.4,0.4], "pelvis", true];
+                    deleteVehicle _x;
+                };
+            } forEach _canisters;
+            
 
             private _sound = [_unit, "water"] call fnc_getSound;
             [_unit, _sound] call fnc_saySound;
             _unit limitSpeed 7; // dont run
             _unit doMove (_unit getVariable ["Mawali_homePos", [0,0,0]]);
-            waitUntil {moveToCompleted _unit || moveToFailed _unit};
+            waitUntil {sleep 1; unitReady _unit};
             {deletevehicle _x} forEach _canisters;
             deletevehicle _unit;
         }; 
         case "rice" : {
-            [_unit] call grad_civilianBehaviour_fnc_carryAnimation;
+            private _riceSackDestroyed = createSimpleObject ["Land_FoodSack_01_dmg_brown_idap_F", [0,0,0], false];
+            _riceSackDestroyed setDir (random 360);
+            _riceSackDestroyed setPos (getPos _unit);
+            playSound3D ["a3\animals_f_beta\sheep\data\sound\sheep_falldown1.wss", _unit];
+
+            _unit setUnitPos "MIDDLE";
+
             _unit doMove (_unit getVariable ["Mawali_homePos", [0,0,0]]);
             private _sound = [_unit, "rice"] call fnc_getSound;
             [_unit, _sound] call fnc_saySound;
             _unit limitSpeed 7; // dont run
-            waitUntil {moveToCompleted _unit || moveToFailed _unit};
+            waitUntil {sleep 1; unitReady _unit};
             deletevehicle _unit;
         }; 
         default {  /*...code...*/ }; 
@@ -151,20 +177,62 @@ fnc_prepareInteractionType = {
     if ([_vehicle] call ace_refuel_fnc_getFuel > 50) then {
         _unit setVariable ["Mawali_interactionType", "fuel"];
         
-        private _canisterL = "Land_CanisterPlastic_F" createvehicle [0,0,0]; // createSimpleObject ["Land_CanisterPlastic_F", [0,0,0]];
-        _canisterL attachTo [_unit, [0,0,-.3], "lefthand", true];
-        _canisterL setMass 10000;
-        { _x disableCollisionWith _canisterL; } forEach allplayers; // todo broadcast
-        _unit disableCollisionWith _canisterL; 
+        private _items = [
+            ["rhsusf_props_ScepterMWC_D", [0,0,-.2], ["righthand", "lefthand"]],
+            ["rhsusf_props_ScepterMWC_OD", [0,0,-.2], ["righthand", "lefthand"]],
+            ["Land_CanisterPlastic_F", [0,0,-.3], ["righthand", "lefthand"]],
+            ["Land_BarrelEmpty_F", [0,-.4,0.4], ["pelvis"]],
+            ["Land_BarrelEmpty_grey_F", [0,-.4,0.4], ["pelvis"]],
+            ["gm_barrel", [0,-.4,0.4], ["pelvis"]],
+            ["gm_barrel_rusty", [0,-.4,0.4], ["pelvis"]],
+            ["Land_Barrel_empty", [0,-.4,0.4], ["pelvis"]]
+        ];     
 
-        private _canisterR = "Land_CanisterPlastic_F" createvehicle [0,0,0]; // createSimpleObject ["Land_CanisterPlastic_F", [0,0,0]];
-        _canisterR setMass 10000;
-        _canisterR attachTo [_unit, [0,0,-.3], "righthand", true];
-        { _x disableCollisionWith _canisterR; } forEach allplayers;
-        _unit disableCollisionWith _canisterR;
+        private _item1 = selectRandom _items;
+        _item1 params ["_classname", "_offset", "_selection"];
+
+        if (count _selection > 1) then {
+            private _canisterR = createSimpleObject [_item1#0, [0,0,0]];
+            _canisterR attachTo [_unit, _item1#1, "righthand", true];
+            
+            private _item2 = selectRandom _items;
+            _item2 params ["_classname", "_offset", "_selection"];
+            if (count _selection > 1) then {
+                private _canisterL = createSimpleObject [_item2#0, [0,0,0]];
+                _canisterL attachTo [_unit, _item2#1, "lefthand", true];
+            };
+            
+        } else {
+            private _canisterSingle = createSimpleObject [_classname, [0,0,0]];
+            _canisterSingle attachTo [_unit, _offset, _selection#0, true];
+        };
     };
 
     if (typeOf _vehicle == "UK3CB_UN_B_Kamaz_Closed") then {
+
+        private _items = [
+            ["Land_FoodSacks_01_small_brown_idap_F", [0,0,0], ["head"]],
+            ["Land_FoodSack_01_full_brown_idap_F", [0,0,-.3], ["righthand", "lefthand"]],
+            ["Land_FoodSack_01_full_brown_F", [0,0,-.3], ["righthand", "lefthand"]]
+        ];     
+
+        private _item1 = selectRandom _items;
+        _item1 params ["_classname", "_offset", "_selection"];
+
+        if (count _selection > 1) then {
+            private _canisterR = createSimpleObject [_item1#0, [0,0,0]];
+            _canisterR attachTo [_unit, _item1#1, "righthand", true];
+
+            if (random 2 > 1) then {
+                private _item2 = selectRandom _items;
+                private _canisterL = createSimpleObject [_item2#0, [0,0,0]];
+                _canisterL attachTo [_unit, _item2#1, "lefthand", true];
+            };
+        } else {
+            private _canisterSingle = createSimpleObject [_classname, [0,0,0]];
+            _canisterSingle attachTo [_unit, _offset, _selection#0, true];
+        };
+
         _unit setVariable ["Mawali_interactionType", "rice"];
     };
 };
@@ -210,7 +278,7 @@ fnc_laberShitLoop = {
     };
 	private _string = [_unit, _type] call fnc_getSound;
 
-    systemChat (name _unit + ": " + _string);
+    // systemChat (name _unit + ": " + _string);
 	[_unit, _string] call fnc_saySound;
 
 	[{
@@ -250,10 +318,10 @@ fnc_laberShitLoop = {
                 [_civilian] call fnc_laberShitLoop;
                 sleep (random 1);
             };
-        };
-        sleep DURATION_EACH_VEHICLE; // sleep only when necessary
+            sleep DURATION_EACH_VEHICLE; // sleep only when necessary
+        };        
     };
-    systemChat ("outerloop " + str _foreachindex);
+    // systemChat ("outerloop " + str _foreachindex);
 } forEach (units _convoyGroup);
 
 ["CONVOY UNLOAD DONE", [1,0,0,1]] call grad_zeusmodules_fnc_curatorShowFeedbackMessage;
