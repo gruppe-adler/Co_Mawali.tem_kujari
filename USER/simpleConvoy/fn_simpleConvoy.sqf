@@ -1,9 +1,12 @@
 
 params ["_convoyGroup",["_convoySpeed",50],["_convoySeparation",50],["_pushThrough", true]];
 
+if (!isServer) exitWith {};
+
 // init global vars
-missionNamespace setVariable ["GRAD_convoySpeed", _convoySpeed, true];
-missionNamespace setVariable ["GRAD_convoySeparation", _convoySeparation, true];
+missionNamespace setVariable ["Mawali_convoySpeed", _convoySpeed, true];
+missionNamespace setVariable ["Mawali_convoySeparation", _convoySeparation, true];
+missionNamespace setVariable ["Mawali_convoyGroup", _convoyGroup, true];
 
 if (_pushThrough) then {
     _convoyGroup enableAttack !(_pushThrough);
@@ -17,9 +20,10 @@ _convoyGroup setCombatBehaviour "CARELESS";
     (vehicle _x) setConvoySeparation _convoySeparation;
     _x disableAI "FSM";
     _x disableAI "AUTOCOMBAT";
+    _x setVariable ["lambs_danger_disableAI", true, true];
 } forEach (units _convoyGroup);
 (vehicle leader _convoyGroup) limitSpeed _convoySpeed;
-
+(vehicle leader _convoyGroup) doFollow (leader _convoyGroup);
 
 [{
     params ["_args", "_handle"];
@@ -28,8 +32,8 @@ _convoyGroup setCombatBehaviour "CARELESS";
     if (isNull _convoyGroup) exitWith { [_handle] call CBA_fnc_removePerFrameHandler; };
 
     // enable speed adjustments on the fly
-    private _convoySpeed = missionNamespace getVariable ["GRAD_convoySpeed", 0];
-    private _convoySeparation = missionNamespace getVariable ["GRAD_convoySeparation", 50];
+    private _convoySpeed = missionNamespace getVariable ["Mawali_convoySpeed", 0];
+    private _convoySeparation = missionNamespace getVariable ["Mawali_convoySeparation", 50];
     {
         private _vehicle = vehicle _x;
         // give vehicles behind time to catch up, setting to lower speeds make vehicles stall and drive at less speed
@@ -52,15 +56,18 @@ _convoyGroup setCombatBehaviour "CARELESS";
         } forEach (units _convoyGroup);
     };
 
+    /*
     {
         private _vehicle = vehicle _x;
         if ((speed _vehicle < 5) && (_pushThrough || (behaviour _x != "COMBAT"))) then {
             (_vehicle) doFollow (leader _convoyGroup);
         };  
     } forEach (units _convoyGroup)-(crew (vehicle (leader _convoyGroup)))-allPlayers;
+    */
     {
         private _vehicle = vehicle _x;
         (_vehicle) setConvoySeparation _convoySeparation;
+        (_vehicle) doFollow (leader _convoyGroup);
     } forEach (units _convoyGroup);
 
 }, 1, [_convoyGroup]] call CBA_fnc_addPerFrameHandler;

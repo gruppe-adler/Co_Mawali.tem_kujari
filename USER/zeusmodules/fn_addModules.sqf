@@ -137,6 +137,14 @@
 
 }] call zen_custom_modules_fnc_register;
 
+["MAWALI Convoy Control", "Unload Convoy",
+    {
+      params ["_position", "_object"];
+      
+		  [missionNameSpace getVariable ["Mawali_convoyGroup", grpNull], 50] spawn grad_civilianBehaviour_fnc_civilianUnloadMain;
+
+}] call zen_custom_modules_fnc_register;
+
 
 ["MAWALI Convoy Control", "Convoy 40 kmh",
     {
