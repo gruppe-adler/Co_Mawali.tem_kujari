@@ -2,21 +2,29 @@ params ["_convoyGroup", "_radius"];
 
 #define DURATION_EACH_VEHICLE 1
 
+
+fnc_getValidHousePositions = {
+    params ["_vehicle", ["_radius", 50]];
+
+    private _randomBuildings = nearestObjects [_vehicle, ["House"], _radius];
+    private _buildingsWithPos = [];
+
+    {
+        if (count [_x] call BIS_fnc_buildingPositions > 0) then {
+            _buildingsWithPos pushBackUnique _x;
+        };
+    } forEach _randomBuildings;
+   
+    _buildingsWithPos
+};
+
+
 fnc_civilianPickHousePosition = {
-    params ["_vehicle", "_radius", ["_count", 0]];
+    params ["_validHouses"];
 
-    private _randomBuilding = selectRandom (nearestObjects [_vehicle, ["House", "Building"], _radius]);
-    private _positionInBuildings = ([_randomBuilding] call BIS_fnc_buildingPositions);
+    private _positionInBuildings = ([selectRandom _validHouses] call BIS_fnc_buildingPositions);
 
-    private _positionInBuilding = if (count _positionInBuildings > 0) then { _positionInBuildings#0 } else { [] };
-    
-    systemChat str _count;
-
-	if (count _positionInBuilding < 1 && _count < 50) then { 
-        private _positioninBuilding = [_vehicle, _radius, _count + 1] call fnc_civilianPickHousePosition;
-    };
-
-    _positionInBuilding
+    (_positionInBuildings#0)
 };
 
 fnc_getSuffix = {
@@ -96,6 +104,7 @@ fnc_moveToVehicle = {
 
     if (moveToFailed _unit) exitWith {
         _unit doMove (_unit getVariable ["Mawali_homePos", [0,0,0]]);
+        waitUntil {moveToCompleted _unit || moveToFailed _unit};
         deletevehicle _unit;
     };
     
@@ -116,7 +125,7 @@ fnc_moveToVehicle = {
             [_unit, _sound] call fnc_saySound;
             _unit limitSpeed 7; // dont run
             _unit doMove (_unit getVariable ["Mawali_homePos", [0,0,0]]);
-            waitUntil {sleep 1; moveToCompleted _unit || moveToFailed _unit};
+            waitUntil {moveToCompleted _unit || moveToFailed _unit};
             {deletevehicle _x} forEach _canisters;
             deletevehicle _unit;
         }; 
@@ -126,7 +135,7 @@ fnc_moveToVehicle = {
             private _sound = [_unit, "rice"] call fnc_getSound;
             [_unit, _sound] call fnc_saySound;
             _unit limitSpeed 7; // dont run
-            waitUntil {sleep 1; moveToCompleted _unit || moveToFailed _unit};
+            waitUntil {moveToCompleted _unit || moveToFailed _unit};
             deletevehicle _unit;
         }; 
         default {  /*...code...*/ }; 
@@ -211,14 +220,16 @@ fnc_laberShitLoop = {
 
 {
     private _vehicle = vehicle _x;
+    private _validHouses = [_vehicle] call fnc_getValidHousePositions;
+    if (count _validHouses < 1) exitwith { systemChat "no houses"; };
     // exclude vehicles way off
     if (speed _vehicle == 0 && _vehicle distance (leader group _x) < 500 && typeof _vehicle != "UK3CB_UN_B_Landcruiser") then {
 
         for "_i" from 1 to 40 do {
 
             systemChat ("innerloop " + str _i);
-            private _spawnPosition = [_vehicle, _radius] call fnc_civilianPickHousePosition;
-			if (count _spawnPosition < 1) exitwith {};
+            private _spawnPosition = [_validHouses] call fnc_civilianPickHousePosition;
+			if (count _spawnPosition < 1) exitwith { systemChat "no positions"; };
 
             private _civilian = (createGroup civilian) createUnit ["UK3CB_ADC_C_CIV_ISL", _spawnPosition, [], 0, "CAN_COLLIDE"];
             private _face = selectRandom ["AfricanHead_01", "AfricanHead_02", "AfricanHead_03", "AfricanHead_01_sick", "AfricanHead_02_sick", "AfricanHead_03_sick"];

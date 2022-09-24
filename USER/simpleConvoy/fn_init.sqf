@@ -44,14 +44,11 @@ missionNamespace setVariable ["Mawali_convoyState", 0];
 				missionNamespace setVariable ["Mawali_convoySpeedCache", _previousSpeed];
 				missionNamespace setVariable ["Mawali_convoySpeed", 0.01];
 		};
-
-		private _state = missionNamespace getVariable ["Mawali_convoyState", 0];
-		if (_state == 2) then {
-				// convoy says "running now"
-				[boss, true] call grad_simpleConvoy_fnc_tfarResponse;
-				missionNamespace setVariable ["Mawali_convoySpeedCache", _speed];
-				missionNamespace setVariable ["Mawali_convoySpeed", _speed];
-		};
+		
+		// convoy says "running now"
+		[boss, true] call grad_simpleConvoy_fnc_tfarResponse;
+		missionNamespace setVariable ["Mawali_convoySpeed", _speed];
+		missionNamespace setVariable ["Mawali_convoySpeedCache", _speed];
 
 }] call CBA_fnc_addEventhandler;
 
