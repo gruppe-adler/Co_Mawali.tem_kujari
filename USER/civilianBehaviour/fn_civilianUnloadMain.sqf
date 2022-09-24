@@ -100,11 +100,11 @@ fnc_moveToVehicle = {
     _unit limitSpeed 12; // dont sprint
 
     _unit doMove _vehicleRear;
-    waitUntil {unitReady _unit};
+    waitUntil {moveToCompleted _unit || moveToFailed _unit};
 
     if (moveToFailed _unit) exitWith {
         _unit doMove (_unit getVariable ["Mawali_homePos", [0,0,0]]);
-        waitUntil {sleep 1; unitReady _unit};
+        waitUntil {sleep 1; moveToCompleted _unit || moveToFailed _unit};
         deletevehicle _unit;
     };
     
@@ -147,7 +147,7 @@ fnc_moveToVehicle = {
             [_unit, _sound] call fnc_saySound;
             _unit limitSpeed 7; // dont run
             _unit doMove (_unit getVariable ["Mawali_homePos", [0,0,0]]);
-            waitUntil {sleep 1; unitReady _unit};
+            waitUntil {sleep 1; moveToCompleted _unit || moveToFailed _unit};
             {deletevehicle _x} forEach _canisters;
             deletevehicle _unit;
         }; 
@@ -163,7 +163,7 @@ fnc_moveToVehicle = {
             private _sound = [_unit, "rice"] call fnc_getSound;
             [_unit, _sound] call fnc_saySound;
             _unit limitSpeed 7; // dont run
-            waitUntil {sleep 1; unitReady _unit};
+            waitUntil {sleep 1; moveToCompleted _unit || moveToFailed _unit};
             deletevehicle _unit;
         }; 
         default {  /*...code...*/ }; 
@@ -212,8 +212,8 @@ fnc_prepareInteractionType = {
 
         private _items = [
             ["Land_FoodSacks_01_small_brown_idap_F", [0,0,0], ["head"]],
-            ["Land_FoodSack_01_full_brown_idap_F", [0,0,-.3], ["righthand", "lefthand"]],
-            ["Land_FoodSack_01_full_brown_F", [0,0,-.3], ["righthand", "lefthand"]]
+            ["Land_FoodSack_01_full_brown_idap_F", [-.2,0,0], ["righthand", "lefthand"]],
+            ["Land_FoodSack_01_full_brown_F", [-.2,0,0], ["righthand", "lefthand"]]
         ];     
 
         private _item1 = selectRandom _items;
@@ -311,7 +311,7 @@ fnc_laberShitLoop = {
                 _civilian disableAI "FSM";
                 _civilian setBehaviour "CARELESS";
                 _civilian setVariable ["Mawali_speaker", selectRandom ["akin", "akin2"], true];
-                _civilian setVariable ["Mawali_homePos", getPos _civilian];
+                _civilian setVariable ["Mawali_homePos", getPosATL _civilian];
                 [_civilian, _vehicle] call fnc_prepareInteractionType;
                 if ((_civilian getVariable ["Mawali_interactionType", "none"]) == "none") exitwith { deletevehicle _civilian };
                 [_civilian, _vehicle] spawn fnc_moveToVehicle;

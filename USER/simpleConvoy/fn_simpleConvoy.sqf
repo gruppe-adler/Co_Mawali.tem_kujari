@@ -16,14 +16,14 @@ _convoyGroup setFormation "COLUMN";
 _convoyGroup setCombatBehaviour "CARELESS";
 
 {
-    (vehicle _x) limitSpeed _convoySpeed*1.15;
+    (vehicle _x) forceSpeed _convoySpeed*1.15;
     (vehicle _x) setConvoySeparation _convoySeparation;
     _x disableAI "FSM";
     _x disableAI "AUTOCOMBAT";
     _x setVariable ["lambs_danger_disableAI", true, true];    
     _x forceFollowRoad true;
 } forEach (units _convoyGroup);
-(vehicle leader _convoyGroup) limitSpeed _convoySpeed;
+(vehicle leader _convoyGroup) forceSpeed _convoySpeed;
 (vehicle leader _convoyGroup) doFollow (leader _convoyGroup);
 
 [{
@@ -39,31 +39,32 @@ _convoyGroup setCombatBehaviour "CARELESS";
         private _convoySeparation = ((speed _x)/2) max 2; // dont get closer than 2m even when super slow, can be set individually per veh
         // give vehicles behind time to catch up, setting to lower speeds make vehicles stall and drive at less speed
         if (_convoySpeed < 30) then {
-            _vehicle limitSpeed 30;
+            _vehicle forceSpeed 30;
         } else {
-            _vehicle limitSpeed _convoySpeed*1.15;
+            _vehicle forceSpeed _convoySpeed*1.15;
         };
         _vehicle setConvoySeparation _convoySeparation;
     } forEach (units _convoyGroup);
-    (vehicle leader _convoyGroup) limitSpeed _convoySpeed;
+    (vehicle leader _convoyGroup) forceSpeed _convoySpeed;
 
     if (_convoySpeed == 0) then {
-        (vehicle leader _convoyGroup) limitSpeed 0.001;
+        (vehicle leader _convoyGroup) forceSpeed 0.001;
         {
             private _vehicle = vehicle _x;
-            if (speed _vehicle < 0.5) then {
+            if (speed _vehicle < 0.5 && _vehicle distance (leader _convoyGroup < 1000)) then {
                 (_vehicle) engineOn false;
+                doStop _vehicle;
             };
         } forEach (units _convoyGroup);
+    } else {
+        {
+            private _vehicle = vehicle _x;
+            if (speed _vehicle < 5) then {
+                _x doFollow (leader _convoyGroup);
+                // systemChat ("force follow leader " + name _vehicle);
+            };  
+        } forEach (units _convoyGroup)-(crew (vehicle (leader _convoyGroup)))-allPlayers;
     };
-    
-    {
-        private _vehicle = vehicle _x;
-        if (speed _vehicle < 5) then {
-            _x doFollow (leader _convoyGroup);
-            // systemChat ("force follow leader " + name _vehicle);
-        };  
-    } forEach (units _convoyGroup)-(crew (vehicle (leader _convoyGroup)))-allPlayers;
 
     // systemChat "konvoiloop";
 
