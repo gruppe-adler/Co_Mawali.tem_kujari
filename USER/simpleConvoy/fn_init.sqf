@@ -4,6 +4,7 @@ if (!isServer) exitWith {};
 	 params ["_vehicle"];
 
 	 [_vehicle] call grad_simpleconvoy_fnc_attachCable;
+	 [_vehicle] call grad_simpleconvoy_fnc_attachRicePallets;
 
 }, true, [], true] call CBA_fnc_addClassEventHandler;
 

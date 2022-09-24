@@ -51,6 +51,12 @@ fnc_getSound = {
         }; 
         case "welcome" : {
             _suffix = [(ceil (random 15))] call fnc_getSuffix;
+        };
+        case "fun" : {
+            _suffix = [(ceil (random 15))] call fnc_getSuffix;
+        }; 
+        case "grunt" : {
+            _suffix = [(ceil (random 5))] call fnc_getSuffix;
         }; 
         default {  /*...code...*/ }; 
     };
@@ -167,13 +173,38 @@ fnc_laberShitLoop = {
 
 	if (_unit getVariable ["Mawali_laberCooldown", CBA_missionTime] < (CBA_missionTime + 5)) exitWith {};
 	
-	private _string = [_unit, "suaheli"] call fnc_getSound;
+    private _dice = random 10;
+    private _type = "suaheli";
 
+    if (_dice > 5) then {
+        if (missionNameSpace getVariable ["Mawali_convoySpeed", 0.01] > 0.5) then {
+            _type = "welcome";
+        } else {
+            _type = "adieu";
+        };
+    };
+    if (_dice > 7) then {
+        if (missionNameSpace getVariable ["Mawali_convoySpeed", 0.01] > 0.5) then {
+            _type = "grunt";
+        } else {
+            _type = "adieu";
+        };
+    };
+    if (_dice > 9) then { 
+        if (missionNameSpace getVariable ["Mawali_convoySpeed", 0.01] > 0.5) then {
+            _type = "fun";
+        } else {
+            _type = "adieu";
+        };
+    };
+	private _string = [_unit, _type] call fnc_getSound;
+
+    systemChat (name _unit + ": " + _string);
 	[_unit, _string] call fnc_saySound;
 
 	[{
 		[_this] call fnc_laberShitLoop;
-	}, _unit, (random 20 max 3)] call CBA_fnc_waitAndExecute;
+	}, _unit, (random 10 max 3)] call CBA_fnc_waitAndExecute;
 
 };
 
@@ -196,6 +227,7 @@ fnc_laberShitLoop = {
             _civilian disableAI "AUTOCOMBAT";
             _civilian disableAI "FSM";
             _civilian setBehaviour "CARELESS";
+            _civilian setVariable ["Mawali_speaker", selectRandom ["akin", "akin2"], true];
             _civilian setVariable ["Mawali_homePos", getPos _civilian];
             [_civilian, _vehicle] call fnc_prepareInteractionType;
             if ((_civilian getVariable ["Mawali_interactionType", "none"]) == "none") exitwith { deletevehicle _civilian };

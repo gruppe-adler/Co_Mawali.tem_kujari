@@ -1256,3 +1256,177 @@ class convoy_moving4
     // subtitle delay in seconds, subtitle text
     titles[] = {};
 };
+
+
+
+
+// GRUNT
+class grunt_01
+{
+    name = "grunt_01";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\grunt_01.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class grunt_02
+{
+    name = "grunt_02";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\grunt_02.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class grunt_03
+{
+    name = "grunt_03";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\grunt_03.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class grunt_04
+{
+    name = "grunt_04";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\grunt_04.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class grunt_05
+{
+    name = "grunt_05";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\grunt_05.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+
+
+
+
+// FUN stuff
+class fun_01
+{
+    name = "fun_01";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_01.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_02
+{
+    name = "fun_02";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_02.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_03
+{
+    name = "fun_03";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_03.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_04
+{
+    name = "fun_04";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_04.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_05
+{
+    name = "fun_05";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_05.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+
+
+
+class fun_06
+{
+    name = "fun_06";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_06.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_07
+{
+    name = "fun_07";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_07.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_08
+{
+    name = "fun_08";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_08.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_09
+{
+    name = "fun_09";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_09.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_10
+{
+    name = "fun_10";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_10.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+
+class fun_11
+{
+    name = "fun_11";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_11.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_12
+{
+    name = "fun_12";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_12.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_13
+{
+    name = "fun_13";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_13.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_14
+{
+    name = "fun_14";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_14.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
+class fun_15
+{
+    name = "fun_15";
+    // filename, volume, pitch, distance (optional)
+    sound[] = { "USER\sounds\fun_15.ogg", VOLUME*2, 1, DISTANCE };
+    // subtitle delay in seconds, subtitle text
+    titles[] = {};
+};
