@@ -207,7 +207,15 @@
 
     }] call zen_custom_modules_fnc_register;
 
+["MAWALI Ambient", "Radio Carrier",
+    {
+      // Get all the passed parameters
+      params [["_position", [0,0,0], [[]], 3], ["_objectUnderCursor", objNull, [objNull]]];
+      _position = ASLToAGL _position;
 
+      [_position] remoteExecCall ["grad_ambient_fnc_createMusicCarrier", 2];
+
+    }] call zen_custom_modules_fnc_register;
 
     
 
