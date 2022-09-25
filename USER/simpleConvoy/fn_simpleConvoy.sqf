@@ -22,6 +22,8 @@ _convoyGroup setCombatBehaviour "CARELESS";
     _x disableAI "AUTOCOMBAT";
     _x setVariable ["lambs_danger_disableAI", true, true];    
     _x forceFollowRoad true;
+    [_x] call grad_simpleConvoy_fnc_handleDamage;
+
 } forEach (units _convoyGroup);
 (vehicle leader _convoyGroup) forceSpeed _convoySpeed;
 (vehicle leader _convoyGroup) doFollow (leader _convoyGroup);
@@ -51,18 +53,36 @@ _convoyGroup setCombatBehaviour "CARELESS";
         (vehicle leader _convoyGroup) forceSpeed 0.001;
         {
             private _vehicle = vehicle _x;
-            if (speed _vehicle < 0.5 && _vehicle distance (leader _convoyGroup < 1000)) then {
-                (_vehicle) engineOn false;
+            if (speed _vehicle < 0.5 && (_vehicle distance2d (vehicle leader _convoyGroup) < 1000)) then {
+                _vehicle engineOn false;
                 doStop _vehicle;
             };
         } forEach (units _convoyGroup);
     } else {
         {
             private _vehicle = vehicle _x;
+
+            // force stuck vehicles to move
             if (speed _vehicle < 5) then {
                 _x doFollow (leader _convoyGroup);
                 // systemChat ("force follow leader " + name _vehicle);
-            };  
+            };
+
+            // slow down leading vehicle if too fast            
+            if (_vehicle == vehicle leader _convoyGroup) then {
+                private _minDistance = 10000;
+                
+                {
+                    private _currentDistance = _vehicle distance2d _x;
+                    if (_currentDistance < _minDistance) then {
+                        _minDistance = _currentDistance;
+                    };
+                } forEach (units _convoyGroup);
+
+                if (_minDistance > 200) then {
+                    _vehicle forceSpeed ((150/_minDistance) * _convoySpeed); // 200: 75%,  400: 37%, 1000: 15% speed
+                };
+            };
         } forEach (units _convoyGroup)-(crew (vehicle (leader _convoyGroup)))-allPlayers;
     };
 

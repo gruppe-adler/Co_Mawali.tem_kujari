@@ -100,6 +100,7 @@ fnc_moveToVehicle = {
     _unit limitSpeed 12; // dont sprint
 
     _unit doMove _vehicleRear;
+    diag_log format ["unit moves to back of vehicle: %1", _vehicleRear];
     waitUntil {moveToCompleted _unit || moveToFailed _unit};
 
     if (moveToFailed _unit) exitWith {

@@ -8,6 +8,9 @@ class grad_simpleConvoy {
         class tfarSignals { postinit = 1; };
         class tfarResponse;
         class attachRicePallets;
+        class handleDamage;
+        class bossConvoyDiverge;
+        class bossConvoyStart;
 
     };
 };

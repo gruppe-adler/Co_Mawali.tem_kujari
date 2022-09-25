@@ -179,6 +179,15 @@
 }] call zen_custom_modules_fnc_register;
 
 
+["MAWALI Convoy Control", "Boss Convoy Start",
+    {
+      params ["_position", "_object"];
+      
+		  missionNameSpace setVariable ["Mawali_bossConvoy", true, true];
+
+}] call zen_custom_modules_fnc_register;
+
+
 ["MAWALI Ambient", "Music Radio",
     {
       // Get all the passed parameters
@@ -189,7 +198,7 @@
       _radio setPos _position;
       _radio setDir (random 360);
 
-      private _source = createSoundSource [(selectRandom ["music1", "music2", "arabicsong1", "arabicsong2"]), _position, [], 0];
+      private _source = createSoundSource [(selectRandom ["bongo_01", "bongo_02", "bongo_03"]), _position, [], 0];
       [_source, _radio, false] call grad_ambient_fnc_soundSourceHelper;
       
       {
@@ -199,36 +208,6 @@
     }] call zen_custom_modules_fnc_register;
 
 
-["MAWALI Ambient", "Suicide Car Spawn",
-    {
-      params ["_position", "_object"];
-      _position = ASLToAGL _position;
-
-      [_position] remoteExec ["grad_ambient_fnc_suicideCar", 2];
-
-    }] call zen_custom_modules_fnc_register;
-
-
-["MAWALI Ambient", "Create Mosque Singer",
-    {
-      params ["_position", "_object"];
-      _position = ASLToAGL _position;
-
-      [_position] remoteExec ["grad_ambient_fnc_createMosqueSinger", 2];
-
-    }] call zen_custom_modules_fnc_register;
-
-["MAWALI Ambient", "Shoot Flare",
-    {
-      params ["_position", "_object"];
-      _position = ASLToAGL _position;
-
-       _position set [2, 250]; private _ammo = "rhsusf_40mm_clusterflare_red" createVehicle _position; 
-      _ammo setVelocity [random 1,random 1,1];
-
-    }] call zen_custom_modules_fnc_register;
-
-    
 
     
 
