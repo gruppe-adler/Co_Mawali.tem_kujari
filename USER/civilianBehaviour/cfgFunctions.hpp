@@ -3,6 +3,7 @@ class grad_civilianBehaviour {
         file = USER\civilianBehaviour;
         
 		class civilianUnloadMain;
+        class cleanAttachment;
 
     };
 };

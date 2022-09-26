@@ -11,6 +11,10 @@ class grad_simpleConvoy {
         class handleDamage;
         class bossConvoyDiverge;
         class bossConvoyStart;
+        class bossConvoyPathE;
+        class bossConvoyPathNE;
+        class bossConvoyPathN;
+        class bossConvoyPathN2;
 
     };
 };

@@ -124,6 +124,8 @@ fnc_moveToVehicle = {
                     private _replacement = createSimpleObject ["Land_BarrelWater_F", [0,0,0]];
                     _replacement attachTo [_unit, [0,-.4,0.4], "pelvis", true];
                     deleteVehicle _x;
+
+                    [_unit, _replacement] call grad_civilianBehaviour_fnc_cleanAttachment;
                 };
             } forEach _canisters;
 
@@ -132,6 +134,8 @@ fnc_moveToVehicle = {
                     private _replacement = createSimpleObject ["Land_BarrelWater_grey_F", [0,0,0]];
                     _replacement attachTo [_unit, [0,-.4,0.4], "pelvis", true];
                     deleteVehicle _x;
+
+                    [_unit, _replacement] call grad_civilianBehaviour_fnc_cleanAttachment;
                 };
             } forEach _canisters;
 
@@ -140,6 +144,8 @@ fnc_moveToVehicle = {
                     private _replacement = createSimpleObject ["Land_Barrel_water", [0,0,0]];
                     _replacement attachTo [_unit, [0,-.4,0.4], "pelvis", true];
                     deleteVehicle _x;
+
+                    [_unit, _replacement] call grad_civilianBehaviour_fnc_cleanAttachment;
                 };
             } forEach _canisters;
             
@@ -195,12 +201,16 @@ fnc_prepareInteractionType = {
         if (count _selection > 1) then {
             private _canisterR = createSimpleObject [_item1#0, [0,0,0]];
             _canisterR attachTo [_unit, _item1#1, "righthand", true];
+
+            [_unit, _canisterR] call grad_civilianBehaviour_fnc_cleanAttachment;
             
             private _item2 = selectRandom _items;
             _item2 params ["_classname", "_offset", "_selection"];
             if (count _selection > 1) then {
                 private _canisterL = createSimpleObject [_item2#0, [0,0,0]];
                 _canisterL attachTo [_unit, _item2#1, "lefthand", true];
+
+                [_unit, _canisterL] call grad_civilianBehaviour_fnc_cleanAttachment;
             };
             
         } else {
@@ -224,10 +234,14 @@ fnc_prepareInteractionType = {
             private _canisterR = createSimpleObject [_item1#0, [0,0,0]];
             _canisterR attachTo [_unit, _item1#1, "righthand", true];
 
+            [_unit, _canisterR] call grad_civilianBehaviour_fnc_cleanAttachment;
+
             if (random 2 > 1) then {
                 private _item2 = selectRandom _items;
                 private _canisterL = createSimpleObject [_item2#0, [0,0,0]];
                 _canisterL attachTo [_unit, _item2#1, "lefthand", true];
+
+                [_unit, _canisterL] call grad_civilianBehaviour_fnc_cleanAttachment;
             };
         } else {
             private _canisterSingle = createSimpleObject [_classname, [0,0,0]];
@@ -293,7 +307,7 @@ fnc_laberShitLoop = {
     private _vehicle = vehicle _x;
     private _validHouses = [_vehicle] call fnc_getValidHousePositions;
     if (count _validHouses < 1) then { 
-        systemChat ("no houses for vehicle " + str _foreachindex); 
+        // systemChat ("no houses for vehicle " + str _foreachindex); 
     } else {
         // exclude vehicles way off
         if (speed _vehicle == 0 && _vehicle distance (leader group _x) < 500 && typeof _vehicle != "UK3CB_UN_B_Landcruiser") then {
