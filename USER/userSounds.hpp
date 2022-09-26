@@ -1432,34 +1432,6 @@ class fun_15
 };
 
 
-
-class bongo_01
-{
-    name = "bongo_01";
-    // filename, volume, pitch, distance (optional)
-    sound[] = { "USER\sounds\bongo_01.ogg", VOLUME*2, 1, DISTANCE };
-    // subtitle delay in seconds, subtitle text
-    titles[] = {};
-};
-class bongo_02
-{
-    name = "bongo_02";
-    // filename, volume, pitch, distance (optional)
-    sound[] = { "USER\sounds\bongo_02.ogg", VOLUME*2, 1, DISTANCE };
-    // subtitle delay in seconds, subtitle text
-    titles[] = {};
-};
-class bongo_03
-{
-    name = "bongo_03";
-    // filename, volume, pitch, distance (optional)
-    sound[] = { "USER\sounds\bongo_03.ogg", VOLUME*2, 1, DISTANCE };
-    // subtitle delay in seconds, subtitle text
-    titles[] = {};
-};
-
-
-
 class buzz
 {
     name = "buzz";

@@ -141,7 +141,7 @@
     {
       params ["_position", "_object"];
       
-		  [missionNameSpace getVariable ["Mawali_convoyGroup", grpNull], 50] spawn grad_civilianBehaviour_fnc_civilianUnloadMain;
+		  [missionNameSpace getVariable ["Mawali_convoyGroup", grpNull], 50] remoteExec ["grad_civilianBehaviour_fnc_civilianUnloadMain", 2];
 
 }] call zen_custom_modules_fnc_register;
 
@@ -177,6 +177,67 @@
 		  ["Mawali_convoySpeed",[80]] call CBA_fnc_serverEvent;
 
 }] call zen_custom_modules_fnc_register;
+
+
+["MAWALI Convoy Control", "Convoy Unload Duration 30",
+    {
+      params ["_position", "_object"];
+      
+		  missionNamespace setVariable ["Mawali_convoyDurationUnload", 30, true];
+
+}] call zen_custom_modules_fnc_register;
+
+["MAWALI Convoy Control", "Convoy Unload Duration 60",
+    {
+      params ["_position", "_object"];
+      
+		  missionNamespace setVariable ["Mawali_convoyDurationUnload", 60, true];
+
+}] call zen_custom_modules_fnc_register;
+
+["MAWALI Convoy Control", "Convoy Unload Duration 120",
+    {
+      params ["_position", "_object"];
+      
+		  missionNamespace setVariable ["Mawali_convoyDurationUnload", 120, true];
+
+}] call zen_custom_modules_fnc_register;
+
+["MAWALI Convoy Control", "Convoy Unload Duration 240",
+    {
+      params ["_position", "_object"];
+      
+		  missionNamespace setVariable ["Mawali_convoyDurationUnload", 240, true];
+
+}] call zen_custom_modules_fnc_register;
+
+
+
+["MAWALI Convoy Control", "Convoy Unload Civ Count 10",
+    {
+      params ["_position", "_object"];
+      
+		  missionNamespace setVariable ["mawali_convoyUnloadCivCount", 10, true];
+
+}] call zen_custom_modules_fnc_register;
+
+["MAWALI Convoy Control", "Convoy Unload Civ Count 20",
+    {
+      params ["_position", "_object"];
+      
+		  missionNamespace setVariable ["mawali_convoyUnloadCivCount", 20, true];
+
+}] call zen_custom_modules_fnc_register;
+
+["MAWALI Convoy Control", "Convoy Unload Civ Count 30",
+    {
+      params ["_position", "_object"];
+      
+		  missionNamespace setVariable ["mawali_convoyUnloadCivCount", 30, true];
+
+}] call zen_custom_modules_fnc_register;
+
+
 
 
 ["MAWALI Convoy Control", "Boss Convoy Start",

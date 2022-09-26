@@ -16,25 +16,25 @@ class CfgSFX
         
     class bongo_01
     {
-        name = "bongo_01";
+        name = "bongo_01_name";
         sounds[]={sfxsound};
-        sfxsound[]={"USER\sound\bongo_01.ogg",35,1,150,1,1,1,0};
+        sfxsound[]={"USER\sounds\bongo_01.ogg",35,1,150,1,1,1,0};
         empty[]= {"",0,0,0,0,0,0,0};
     };
 
 	class bongo_02
     {
-        name = "bongo_02";
+        name = "bongo_02_name";
         sounds[]={sfxsound};
-        sfxsound[]={"USER\sound\bongo_02.ogg",35,1,150,1,1,1,0};
+        sfxsound[]={"USER\sounds\bongo_02.ogg",35,1,150,1,1,1,0};
         empty[]= {"",0,0,0,0,0,0,0};
     };
 
 	class bongo_03
     {
-        name = "bongo_03";
+        name = "bongo_03_name";
         sounds[]={sfxsound};
-        sfxsound[]={"USER\sound\bongo_03.ogg",35,1,150,1,1,1,0};
+        sfxsound[]={"USER\sounds\bongo_03.ogg",35,1,150,1,1,1,0};
         empty[]= {"",0,0,0,0,0,0,0};
     };
 
