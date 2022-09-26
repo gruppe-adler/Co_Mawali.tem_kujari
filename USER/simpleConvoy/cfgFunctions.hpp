@@ -9,12 +9,7 @@ class grad_simpleConvoy {
         class tfarResponse;
         class attachRicePallets;
         class handleDamage;
-        class bossConvoyDiverge;
         class bossConvoyStart;
-        class bossConvoyPathE;
-        class bossConvoyPathNE;
-        class bossConvoyPathN;
-        class bossConvoyPathN2;
 
     };
 };
